@@ -1,0 +1,3 @@
+org.springframework.test.context.ContextCustomizerFactory = \
+    sn.esmt.tech.config.SqlTestContainersSpringContextCustomizerFactory,sn.esmt.\
+    tech.config.KafkaTestContainersSpringContextCustomizerFactory

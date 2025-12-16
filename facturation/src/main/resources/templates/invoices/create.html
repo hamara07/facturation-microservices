@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Créer une facture</title>
+  <style>
+    body { font-family: Arial; background: #f7f7f7; padding: 20px; }
+    form {
+      background: white; padding: 20px; width: 450px;
+      border-radius: 5px; box-shadow: 0 0 8px #ccc;
+    }
+    label { display: block; margin-top: 10px; }
+    input, select { width: 100%; padding: 8px; margin-top: 5px; }
+    .btn {
+      margin-top: 15px; padding: 10px; width: 100%;
+      background: #28a745; color: white;
+      border: none; border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Créer une nouvelle facture</h2>
+
+<form method="post" th:action="@{/api/invoices/create}">
+  <th:block th:if="${_csrf != null}">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+  </th:block>
+
+  <label>ID Client :</label>
+  <input type="number" name="clientId" required>
+
+  <label>Montant :</label>
+  <input type="number" name="amount" required>
+
+  <label>Description :</label>
+  <input type="text" name="description">
+
+  <label>Date d'émission :</label>
+  <input type="date" name="dateEmission" required>
+
+  <label>Méthode de paiement :</label>
+  <select name="paymentMethod">
+    <option value="CARD">Carte</option>
+    <option value="TRANSFER">Virement</option>
+    <option value="CASH">Espèces</option>
+  </select>
+
+  <button class="btn" type="submit">Créer la facture</button>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://sn.esmt.tech/invoice"
+           xmlns:tns="http://sn.esmt.tech/invoice"
+           elementFormDefault="qualified">
+
+  <!-- ========================= -->
+  <!-- Requête : une facture -->
+  <!-- ========================= -->
+  <xs:element name="getInvoiceRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="id" type="xs:long"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- ========================= -->
+  <!-- Réponse : détails facture -->
+  <!-- ========================= -->
+  <xs:element name="getInvoiceResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="id" type="xs:long"/>
+        <xs:element name="clientName" type="xs:string"/>
+        <xs:element name="description" type="xs:string"/>
+        <xs:element name="amount" type="xs:decimal"/>
+        <xs:element name="status" type="xs:string"/>
+        <xs:element name="dateEmission" type="xs:date"/>
+        <xs:element name="datePaiement" type="xs:date" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

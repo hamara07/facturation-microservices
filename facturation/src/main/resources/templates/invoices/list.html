@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Toutes les factures</title>
+  <style>
+    body { font-family: Arial; background: #f7f7f7; padding: 20px; }
+    h2 { color: #333; }
+    table { width: 100%; background: white; border-collapse: collapse; margin-top: 15px; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+    th { background: #2d89ef; color: white; }
+    tr:nth-child(even) { background: #f2f2f2; }
+    .btn { padding: 8px 12px; border-radius: 4px; text-decoration: none; margin-right: 5px; cursor: pointer; }
+    .btn-blue { background: #007bff; color: white; }
+    .btn-green { background: #28a745; color: white; }
+    .btn-orange { background: #ff9800; color:white; }
+    .btn-purple { background: #6f42c1; color:white; }
+    .actions { display: flex; gap: 10px; }
+    .create-btn { margin-bottom: 15px; display: inline-block; }
+    form { margin-bottom: 20px; }
+    label { margin-right: 10px; font-weight: bold; }
+    select { padding: 5px; }
+  </style>
+</head>
+<body>
+
+<h2>Liste de toutes les factures</h2>
+
+<a th:href="@{/api/invoices/create}" class="btn btn-green create-btn">Créer une nouvelle facture</a>
+
+<!-- Formulaire avec sélection -->
+<form id="invoiceForm" onsubmit="return goToClientInvoices()">
+  <label>Sélectionner une facture :</label>
+  <select id="invoiceSelect" name="invoiceId">
+    <option th:each="invoice : ${invoices}"
+            th:value="${invoice.id}"
+            th:data-client="${invoice.client.id}"
+            th:text="|Facture ${invoice.id} - Client ${invoice.client.nom} ${invoice.client.prenom}|">
+    </option>
+  </select>
+
+  <button type="submit" class="btn btn-orange">Voir factures du client</button>
+  <button type="button" class="btn btn-purple" onclick="goToTotal()">Total facturé du client</button>
+</form>
+
+<script>
+  // Redirection vers les factures du client sélectionné
+  function goToClientInvoices() {
+    const select = document.getElementById("invoiceSelect");
+    const clientId = select.options[select.selectedIndex].getAttribute("data-client");
+    if (!clientId) {
+      alert("Veuillez sélectionner une facture.");
+      return false;
+    }
+    window.location.href = `/api/invoices/client/${clientId}`;
+    return false;
+  }
+
+  // Redirection vers le total facturé
+  function goToTotal() {
+    const select = document.getElementById("invoiceSelect");
+    const clientId = select.options[select.selectedIndex].getAttribute("data-client");
+    if (!clientId) {
+      alert("Veuillez sélectionner une facture.");
+      return;
+    }
+    window.location.href = `/api/invoices/client/${clientId}/total`;
+  }
+</script>
+
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Client</th>
+    <th>Description</th>
+    <th>Montant</th>
+    <th>Status</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="invoice : ${invoices}">
+    <td th:text="${invoice.id}"></td>
+    <td th:text="|${invoice.client.nom} ${invoice.client.prenom}|"></td>
+    <td th:text="${invoice.description}"></td>
+    <td th:text="${invoice.amount}"></td>
+    <td th:text="${invoice.status}"></td>
+    <td class="actions">
+      <a class="btn btn-blue" th:href="@{/api/invoices/{id}(id=${invoice.id})}">Voir détails</a>
+      <a class="btn btn-orange" th:href="@{/api/invoices/client/{clientId}(clientId=${invoice.client.id})}">Factures du client</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

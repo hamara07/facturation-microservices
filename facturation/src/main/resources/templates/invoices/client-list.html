@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Factures du client</title>
+  <style>
+    body { font-family: Arial; background: #f7f7f7; padding: 20px; }
+    h2 { color: #333; }
+    table { width: 100%; background: white; border-collapse: collapse; margin-top: 15px; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+    th { background: #2d89ef; color: white; }
+    tr:nth-child(even) { background: #f2f2f2; }
+    .btn { padding: 6px 10px; border-radius: 4px; text-decoration: none; margin-right: 5px; }
+    .btn-blue { background: #007bff; color: white; }
+    .btn-green { background: #28a745; color: white; }
+    .btn-orange { background: #ff9800; color:white; }
+  </style>
+</head>
+<body>
+
+<h2>Factures du client #<span th:text="${clientId}"></span></h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>ID Facture</th>
+    <th>Description</th>
+    <th>Montant</th>
+    <th>Status</th>
+    <th>Date émission</th>
+    <th>Date paiement</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="invoice : ${invoices}">
+    <td th:text="${invoice.id}"></td>
+    <td th:text="${invoice.description}"></td>
+    <td th:text="${invoice.amount}"></td>
+    <td th:text="${invoice.status}"></td>
+    <td th:text="${invoice.dateEmission}"></td>
+    <td th:text="${invoice.datePaiement}"></td>
+    <td>
+      <a class="btn btn-blue" th:href="@{/api/invoices/{id}(id=${invoice.id})}">Voir détails</a>
+      <a class="btn btn-green" th:href="@{/api/invoices/{id}/pay(id=${invoice.id})}">Payer</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<br>
+<a class="btn btn-orange" th:href="@{/api/invoices}">Retour à toutes les factures</a>
+
+</body>
+</html>

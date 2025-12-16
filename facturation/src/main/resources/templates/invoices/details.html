@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Détails facture</title>
+  <style>
+    body { font-family: Arial; background: #f2f2f2; padding: 20px; }
+    .box {
+      background: white; padding: 20px; width: 450px;
+      border-radius: 5px; box-shadow: 0 0 8px #ccc;
+    }
+    .btn { padding: 10px; display: inline-block;
+      background: #007bff; color: white; text-decoration: none;
+      border-radius: 4px; margin-top: 10px; }
+    .btn-green { background: #28a745; }
+    .btn-orange { background: #ff9800; }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2>Facture #<span th:text="${invoice.id}"></span></h2>
+
+  <p><b>Client :</b> <span th:text="${invoice.client.nom} + ' ' + ${invoice.client.prenom}"></span></p>
+  <p><b>Description :</b> <span th:text="${invoice.description}"></span></p>
+  <p><b>Montant :</b> <span th:text="${invoice.amount}"></span></p>
+  <p><b>Status :</b> <span th:text="${invoice.status}"></span></p>
+  <p><b>Date émission :</b> <span th:text="${invoice.dateEmission}"></span></p>
+  <p><b>Date paiement :</b> <span th:text="${invoice.datePaiement}"></span></p>
+
+  <br>
+  <a class="btn btn-green" th:href="@{/api/invoices/{id}/pay(id=${invoice.id})}">Payer cette facture</a>
+  <br>
+  <a class="btn btn-orange" th:href="@{/api/invoices/client/{clientId}(clientId=${invoice.client.id})}">Voir toutes les factures du client</a>
+  <br>
+  <a class="btn" th:href="@{/api/invoices}">Retour à toutes les factures</a>
+  <br>
+  <a th:href="@{/api/invoices/{id}/pdf(id=${invoice.id})}" target="_blank" class="btn btn-blue">
+    Générer un reçu PDF
+  </a>
+</div>
+
+</body>
+</html>
