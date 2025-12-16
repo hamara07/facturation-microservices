@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api name="factureIntegration" context="/fact" version="1.0.0" version-type="context" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" url-mapping="/getInvoice">
+        <inSequence>
+            <property name="REST_URL_POSTFIX" scope="axis2" action="remove"/>
+            <payloadFactory media-type="xml" template-type="freemarker">
+                <format><![CDATA[<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope">
+<soapenv:Header/>
+<soapenv:Body>
+<web:getInvoiceRequest xmlns:web="http://sn.esmt.tech/invoice"><web:id>${payload.getInvoiceRequest.id}</web:id></web:getInvoiceRequest></soapenv:Body>
+</soapenv:Envelope>
+]]></format>
+                <args/>
+            </payloadFactory>
+            <property name="messageType" value="application/soap+xml" scope="axis2" type="STRING"/>
+            <call>
+                <endpoint key="factureIntegration_SOAP_ENDPOINT"/>
+            </call>
+            <property name="messageType" value="application/json" scope="axis2" type="STRING"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

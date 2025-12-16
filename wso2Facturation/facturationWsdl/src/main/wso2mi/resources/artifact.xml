@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<artifacts>
+  <artifact name="resources_api-definitions_factureIntegration_v1_0_0" groupId="com.microintegrator.projects" version="1.0.0" type="registry/resource" serverRole="EnterpriseIntegrator">
+    <item>
+      <file>factureIntegration_v1.0.0</file>
+      <path>/_system/governance/mi-resources/api-definitions</path>
+      <mediaType>application/yaml</mediaType>
+      <properties/>
+    </item>
+  </artifact>
+</artifacts>

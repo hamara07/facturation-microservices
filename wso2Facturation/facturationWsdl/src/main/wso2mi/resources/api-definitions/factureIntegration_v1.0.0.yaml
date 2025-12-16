@@ -1,0 +1,29 @@
+openapi: 3.0.1
+info:
+  title: factureIntegration
+  description: API Definition of factureIntegration
+  version: 1.0.0
+servers:
+- url: http://localhost:8290/fact
+- url: https://localhost:8253/fact
+paths:
+  /getInvoice:
+    post:
+      requestBody:
+        description: Sample Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: object
+          application/xml:
+            schema:
+              type: object
+              xml:
+                name: payload
+        required: false
+      responses:
+        default:
+          description: Default response

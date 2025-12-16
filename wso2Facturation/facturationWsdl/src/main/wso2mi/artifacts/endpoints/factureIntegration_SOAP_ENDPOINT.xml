@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoint name="factureIntegration_SOAP_ENDPOINT" xmlns="http://ws.apache.org/ns/synapse">
+    <wsdl port="InvoicePortSoap11" service="InvoicePortService" uri="http://localhost:8081/ws/invoice.wsdl?wsdl">
+        <suspendOnFailure>
+            <initialDuration>-1</initialDuration>
+            <progressionFactor>1</progressionFactor>
+        </suspendOnFailure>
+        <markForSuspension>
+            <retriesBeforeSuspension>0</retriesBeforeSuspension>
+        </markForSuspension>
+    </wsdl>
+</endpoint>
